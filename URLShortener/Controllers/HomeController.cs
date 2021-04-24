@@ -30,12 +30,6 @@ namespace URLShortener.Controllers
             return View();
         }
 
-        [Route("/privacy")]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [HttpPost]
         [Route("/shorten")]
         public IActionResult Shorten([Bind("Url")] ShortenUrlRequest request)
