@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body, input, button {
+  font: 1rem / 1rem Verdana, sans-serif;
+  line-height: 1.4;
+}
+
+body, .layout {
+  min-height: 100vh;
+}
+
+.layout {
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-flow: column wrap;
+  width: 45vw;
+  margin: 0 auto;
+  
+  &__input {
+    margin-bottom: 1rem;
+    padding: .25rem;
+    text-align: center;
+    outline: none;
+    
+    &:focus {
+      box-shadow: 0 0 10px #eee;
+    }
+  }
+  
+  &__result {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  &__shortened-url {
+    font-size: 3rem;
+  }
+  
+  &__copy-to-clipboard {
+    width: 2.5rem;
+    height: 2.5rem;
+    text-indent: -15rem;
+    overflow: hidden;
+    background: url('../img/clipboard.svg') center no-repeat;
+    border: 0;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,5 @@
+# generated assets
+/wwwroot/assets/
+
+# npm modules
+/node_modules/
