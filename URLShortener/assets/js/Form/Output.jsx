@@ -33,7 +33,6 @@ export default ({response}) => {
     
     return (
         <div className="output">
-            <div className="output__short-url">{response.url}</div>
             <button
                 className={buttonClassNames}
                 type="button"
@@ -41,6 +40,9 @@ export default ({response}) => {
                 onClick={copyToClipboard}>
                 Copy to Clipboard
             </button>
+            <a href={response.url}
+               className="output__short-url"
+               target="_blank">{response.url}</a>
         </div>
     );
 };
