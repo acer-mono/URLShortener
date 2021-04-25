@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using URLShortener.Models;
@@ -35,7 +36,6 @@ namespace URLShortener.Controllers
             return View();
         }
 
-
         [HttpPost]
         [Route("/shorten")]
         public IActionResult Shorten([Bind("Url")] ShortenUrlRequest request)
@@ -67,9 +67,9 @@ namespace URLShortener.Controllers
 
             if (result != null)
             {
-                return Redirect(result.OriginalUrl);
+                return Redirect(result.GetAbsoluteUrl());
             }
-            
+
             return View("Error404");
         }
 
