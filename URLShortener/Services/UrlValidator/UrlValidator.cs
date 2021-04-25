@@ -6,7 +6,7 @@ namespace URLShortener.Services.UrlValidator
     public class UrlValidator : IUrlValidator
     {
         private const string Pattern =
-            @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.%]+$";
 
         private static readonly Regex ValidUrlRegex =
             new Regex(Pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
