@@ -7,6 +7,9 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     .setPublicPath('/assets')
     .setOutputPath('wwwroot/assets')
+    .configureBabel(cfg => {
+        cfg.plugins.push('@babel/plugin-transform-runtime');
+    })
     .enableReactPreset()
     .enableSassLoader()
     .addEntry('app', './assets/js/app.jsx')
