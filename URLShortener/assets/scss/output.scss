@@ -1,12 +1,7 @@
 .output {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
   align-items: center;
-  
-  &__short-url {
-    font-size: 3rem;
-  }
 
   &__copy {
     width: 26px;
@@ -16,11 +11,16 @@
     overflow: hidden;
     background: url('../img/clipboard.svg') 0 -1px no-repeat;
     border: 0;
+    outline: none;
     cursor: pointer;
     
     &--ok {
       background-position: 0 -30px;
     }
+  }
+
+  &__short-url {
+    font-size: 1.5rem;
   }
   
   &__error {
