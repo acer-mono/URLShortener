@@ -40,14 +40,13 @@ namespace URLShortener.Controllers
 
         [HttpPost]
         [Route("/shorten")]
-        public IActionResult Short([Bind("Url")] ShortenUrlRequest request)
+        public IActionResult Shorten([Bind("Url")] ShortenUrlRequest request)
         {
             var result = _dbContext.Urls.FirstOrDefault(u => u.OriginalUrl.Equals(request.Url));
 
             if (!IsUrlValid(request.Url))
             {
-                //TODO error 400 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                return Json(new {error = "URL is not valid"});
+                return BadRequest(new {title = "Bad request", message = "URL is not valid"});
             }
 
             if (result == null)
@@ -72,9 +71,8 @@ namespace URLShortener.Controllers
             {
                 return Redirect(result.OriginalUrl);
             }
-
-            //TODO 404
-            return NotFound();
+            
+            return View("Error404");
         }
 
         [Route("/error")]
