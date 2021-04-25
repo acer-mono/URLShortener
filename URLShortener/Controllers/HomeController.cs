@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using URLShortener.Models;
+using URLShortener.Services.Hasher;
+using URLShortener.Services.UrlValidator;
 
 namespace URLShortener.Controllers
 {
@@ -18,10 +12,14 @@ namespace URLShortener.Controllers
     {
         private const string ShortenUrlEndpoint = "/shorten";
         private readonly DatabaseContext _dbContext;
+        private readonly IHasher _hasher;
+        private readonly IUrlValidator _urlValidator;
 
-        public HomeController(DatabaseContext dbContext)
+        public HomeController(DatabaseContext dbContext, IHasher hasher, IUrlValidator urlValidator)
         {
             _dbContext = dbContext;
+            _hasher = hasher;
+            _urlValidator = urlValidator;
         }
 
         [Route("/")]
@@ -44,14 +42,14 @@ namespace URLShortener.Controllers
         {
             var result = _dbContext.Urls.FirstOrDefault(u => u.OriginalUrl.Equals(request.Url));
 
-            if (!IsUrlValid(request.Url))
+            if (!_urlValidator.IsValid(request.Url))
             {
                 return BadRequest(new {title = "Bad request", message = "URL is not valid"});
             }
 
             if (result == null)
             {
-                var hash = CreateUniqueHash(request.Url);
+                var hash = _hasher.Hash(request.Url);
                 result = new Url {OriginalUrl = request.Url, Hash = hash};
                 _dbContext.Urls.Add(result);
                 _dbContext.SaveChanges();
@@ -80,21 +78,6 @@ namespace URLShortener.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
-        }
-
-        private string CreateUniqueHash(string data)
-        {
-            //TODO to services -> Hasher
-            using SHA1Managed sha1 = new SHA1Managed();
-            var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(data));
-            return string.Concat(Convert.ToBase64String(hash).ToCharArray().Where(x => char.IsLetterOrDigit(x))
-                .Take(10));
-        }
-
-        private bool IsUrlValid(string source)
-        {
-            //TODO validator change and to services!!!!!
-            return Uri.TryCreate(source, UriKind.Absolute, out var uriResult) && uriResult.Scheme == Uri.UriSchemeHttp;
         }
     }
 }
