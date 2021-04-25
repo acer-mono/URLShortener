@@ -31,7 +31,7 @@ namespace URLShortener.Controllers
         }
 
         [HttpPost]
-        [Route("/shorten")]
+        [Route(ShortenUrlEndpoint)]
         public IActionResult Shorten([Bind("Url")] ShortenUrlRequest request)
         {
             var result = _dbContext.Urls.FirstOrDefault(u => u.OriginalUrl.Equals(request.Url));
