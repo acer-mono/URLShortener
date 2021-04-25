@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using URLShortener.Models;
+using URLShortener.Services.Hasher;
+using URLShortener.Services.UrlValidator;
 
 namespace URLShortener
 {
@@ -31,6 +29,8 @@ namespace URLShortener
         {
             services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
             services.AddControllersWithViews();
+            services.TryAddSingleton<IUrlValidator, UrlValidator>();
+            services.TryAddSingleton<IHasher, ShaHasher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,9 +61,6 @@ namespace URLShortener
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
