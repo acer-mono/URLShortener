@@ -1,12 +1,7 @@
 .output {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
   align-items: center;
-  
-  &__short-url {
-    font-size: 3rem;
-  }
 
   &__copy {
     width: 26px;
@@ -21,6 +16,11 @@
     &--ok {
       background-position: 0 -30px;
     }
+  }
+
+  &__short-url {
+    font-size: 1.5rem;
+    color: #4774e8;
   }
   
   &__error {
