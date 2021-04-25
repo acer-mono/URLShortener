@@ -7,7 +7,7 @@ export default endpoint => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: { url: originalUrl }
+                    body: JSON.stringify({ url: originalUrl })
                 });
             
             const json = await response.json();
