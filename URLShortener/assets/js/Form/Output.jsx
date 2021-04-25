@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 
-export default props => {
-    if (!props.response || !props.response.url) {
+export default ({response}) => {
+    if (response && response.error === true) {
+        const title = response.title || 'Error';
+        const message = response.message || 'Unknown error';
+
+        return (
+            <div className="output">
+                <div className="output__error">
+                    {`${title}: ${message}`}
+                </div>
+            </div>
+        );
+    }
+    
+    if (!response || !response.url) {
         return '';
     }
     
@@ -13,23 +26,21 @@ export default props => {
         'output__copy--ok': isUrlCopiedToClipboard === true
     });
     
+    const copyToClipboard = async event => {
+        await navigator.clipboard.writeText(response.url);
+        setIsUrlCopiedToClipboard(true);
+    };
+    
     return (
         <div className="output">
-            <div className="output__short-url">{props.response.url}</div>
+            <div className="output__short-url">{response.url}</div>
             <button
                 className={buttonClassNames}
                 type="button"
                 title="Copy to Clipboard"
-                onClick={copyToClipboard(props.response.url, setIsUrlCopiedToClipboard)}>
+                onClick={copyToClipboard}>
                 Copy to Clipboard
             </button>
         </div>
     );
 };
-
-function copyToClipboard(url, setIsUrlCopiedToClipboard) {
-    return async event => {
-        await navigator.clipboard.writeText(url);
-        setIsUrlCopiedToClipboard(true);
-    }
-}
