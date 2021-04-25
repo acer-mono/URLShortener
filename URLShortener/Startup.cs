@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using URLShortener.Models;
 
 namespace URLShortener
 {
@@ -15,6 +16,11 @@ namespace URLShortener
     {
         public Startup(IConfiguration configuration)
         {
+            using(var client = new DatabaseContext())
+            {
+                client.Database.EnsureCreated();
+            }
+            
             Configuration = configuration;
         }
 
@@ -23,6 +29,7 @@ namespace URLShortener
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
             services.AddControllersWithViews();
         }
 
