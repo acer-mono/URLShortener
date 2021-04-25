@@ -25,6 +25,7 @@ body, .layout {
   display: flex;
   flex-flow: column wrap;
   width: 45vw;
+  min-height: 40vh;
   margin: 0 auto;
   
   &__input {
