@@ -5,7 +5,7 @@ import fetchShortUrl from './api';
 import Form from './Form/Form';
 
 const root = document.getElementById('root');
-const endpoint = root.dataset.endpoint; 
+const endpoint = root.dataset.endpoint;
 
 const layout = (
     <div className="layout">
