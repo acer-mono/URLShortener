@@ -1,0 +1,31 @@
+.output {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  
+  &__short-url {
+    font-size: 3rem;
+  }
+
+  &__copy {
+    width: 26px;
+    height: 32px;
+    margin-right: 1rem;
+    text-indent: -15rem;
+    overflow: hidden;
+    background: url('../img/clipboard.svg') 0 -1px no-repeat;
+    border: 0;
+    cursor: pointer;
+    
+    &--ok {
+      background-position: 0 -30px;
+    }
+  }
+  
+  &__error {
+    width: 100%;
+    font-size: .75rem;
+    color: #f66;
+  }
+}

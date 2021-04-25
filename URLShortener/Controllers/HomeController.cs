@@ -9,7 +9,7 @@ using URLShortener.Services.UrlValidator;
 namespace URLShortener.Controllers
 {
     [ApiController]
-    public class HomeController : Controller
+    public sealed class HomeController : Controller
     {
         private const string ShortenUrlEndpoint = "/shorten";
         private readonly DatabaseContext _dbContext;
@@ -27,12 +27,6 @@ namespace URLShortener.Controllers
         public IActionResult Index()
         {
             ViewData["endpoint"] = ShortenUrlEndpoint;
-            return View();
-        }
-
-        [Route("/privacy")]
-        public IActionResult Privacy()
-        {
             return View();
         }
 
